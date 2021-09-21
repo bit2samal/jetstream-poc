@@ -1,13 +1,15 @@
 FROM b2k8786/php-node
 
-RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+# RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 
 RUN a2enmod rewrite
 
-COPY . .
+# COPY . .
 
-RUN composer install
+#RUN composer install
 
-CMD ["chmod -R 777 ./storage/ ./bootstrap/"]
+#RUN chmod -R 777 ./storage/ ./bootstrap/ ./public/
+#RUN npm install
+#RUN npm run prod
 
-ENTRYPOINT php artisan migrate --force && apache2-foreground
+# ENTRYPOINT php artisan migrate --force && apache2-foreground

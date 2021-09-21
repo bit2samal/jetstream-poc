@@ -2,10 +2,12 @@ version: "3"
 services:
   jetstream-poc:
     build:
+      args:
+        PORT: '80'
       context: .
-    container_name: backend
+    container_name: jetstream-poc
     volumes:
-      - ./:/var/www/html
+      - .:/var/www/html
     ports:
       - 86:80
     networks:
@@ -16,18 +18,18 @@ services:
   db:
     image: postgres
     volumes:
-      - ./db:/var/lib/postgresql/data
+      - jetstream-poc-db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: jetstream-poc
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: qwerty
-      TZ: 'UTC'
-      PGTZ: 'UTC'
     ports:
       - 5436:5432
     networks:
       default:
         ipv4_address: 183.12.0.2
+volumes:
+  jetstream-poc-db-data: {}
 networks:
   default:
     driver: bridge
