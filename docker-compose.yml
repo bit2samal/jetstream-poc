@@ -1,10 +1,36 @@
 version: "3"
 services:
-  breeze-blade:
+  jetstream-poc:
     build:
       context: .
-    container_name: gcp_queue
+    container_name: backend
     volumes:
       - ./:/var/www/html
     ports:
-      - 85:80
+      - 86:80
+    networks:
+      default:
+        ipv4_address: 183.12.0.1
+    depends_on:
+      - db
+  db:
+    image: postgres
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: jetstream-poc
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+      TZ: 'UTC'
+      PGTZ: 'UTC'
+    ports:
+      - 5436:5432
+    networks:
+      default:
+        ipv4_address: 183.12.0.2
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 183.12.0.0/10
