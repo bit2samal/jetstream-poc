@@ -6,6 +6,7 @@ services:
         PORT: '80'
       context: .
     container_name: jetstream-poc
+    
     volumes:
       - .:/var/www/html
     ports:
